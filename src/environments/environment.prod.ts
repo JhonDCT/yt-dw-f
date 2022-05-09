@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  downloadHost: 'http://192.168.1.12:53205',
 };

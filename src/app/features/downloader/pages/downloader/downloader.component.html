@@ -1,0 +1,54 @@
+<main class="downloader">
+  <header class="downloader__header">
+    <h1>Convertir Youtube a mp3</h1>
+  </header>
+
+  <form [formGroup]="form" class="downloader__form">
+    <div class="form__container">
+      <input
+        type="text"
+        formControlName="url"
+        name="url"
+        class="form__input"
+        placeholder="Pegar el link de YouTube aquí..." />
+    </div>
+    <button type="submit" (click)="onGetLinks()" class="form__button">
+      Descargar
+    </button>
+  </form>
+
+  <section *ngIf="currentFileDownload">
+    <div class="file">
+      <img
+        class="file__thumbnail"
+        [src]="currentFileDownload.info.thumbnails[0].url"
+        alt="No se encontró la imagen"
+        loading="lazy" />
+
+      <div class="file__information">
+        <h1>{{ currentFileDownload.info.title }}</h1>
+        <h4>
+          Duración:
+          {{ +currentFileDownload.info.lengthSeconds * 1000 | date: 'mm:ss' }}
+        </h4>
+
+        <div class="file__download">
+          <select class="download__select" (change)="onSelectOption($event)">
+            <option
+              class="download__option"
+              *ngFor="let format of currentFileDownload.availableFormats"
+              [value]="format.url">
+              {{ format.mimeType | format }}, {{ format.quality }}
+            </option>
+          </select>
+
+          <audio
+            *ngIf="currentUrl"
+            [src]="currentUrl"
+            controls
+            type="audio/webm"></audio>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
