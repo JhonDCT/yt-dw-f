@@ -18,3 +18,23 @@ export interface Download {
     }>;
   };
 }
+
+export class GenerateUrlForDownload {
+  host: string;
+  path: string;
+  url: string;
+
+  constructor({
+    host,
+    path,
+    url,
+  }: {
+    host: string;
+    path: string;
+    url: string;
+  }) {
+    this.host = host;
+    this.path = path;
+    this.url = url;
+  }
+}

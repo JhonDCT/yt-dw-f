@@ -1,0 +1,41 @@
+<main class="downloader">
+  <header class="downloader__header">
+    <h1>Convertir YouTube a mp3</h1>
+  </header>
+
+  <div class="downloader__form">
+    <div class="form__container">
+      <input
+        type="text"
+        [formControl]="urlControl"
+        name="url"
+        class="form__input"
+        placeholder="Pegar el link de YouTube aquí..." />
+
+      <select [formControl]="formatControl" class="form__button">
+        <option selected value="mp3">MP3</option>
+      </select>
+    </div>
+
+    <ng-container [ngSwitch]="buttonState$ | async">
+      <div *ngSwitchCase="'INITIAL'">
+        <button type="submit" (click)="onGetLinks()" class="form__button">
+          Convertir
+        </button>
+      </div>
+      <div *ngSwitchCase="'LOADING'">
+        <button class="form__button" disabled>Cargando...</button>
+      </div>
+      <div *ngSwitchCase="'SUCCESS'">
+        <a
+          [href]="currentUrl"
+          target="_blank"
+          type="button"
+          (click)="onChangeState()"
+          class="form__button"
+          >Descargar</a
+        >
+      </div>
+    </ng-container>
+  </div>
+</main>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Download } from 'src/app/core/entities/download';
+import { map, Observable } from 'rxjs';
+import { GenerateUrlForDownload } from 'src/app/core/entities/download';
 import { DownloadService } from 'src/app/core/services/download/download.service';
 
 @Injectable({
@@ -9,7 +9,22 @@ import { DownloadService } from 'src/app/core/services/download/download.service
 export class DownloaderService {
   constructor(private downloadSVC: DownloadService) {}
 
-  getFormats(url: string): Observable<Download> {
-    return this.downloadSVC.getFormats(url);
+  generateUrlForDownload(
+    url: string,
+    format: string
+  ): Observable<GenerateUrlForDownload> {
+    return this.downloadSVC.generateUrlForDownload(url, format).pipe(
+      map((result: GenerateUrlForDownload) => {
+        const path = new URLSearchParams(result.path)
+          .toString()
+          .replace('=', '');
+
+        return { ...result, path: path };
+      })
+    );
+  }
+
+  download(path: string): Observable<any> {
+    return this.downloadSVC.download(path.replace('undefined', 'mp3'));
   }
 }

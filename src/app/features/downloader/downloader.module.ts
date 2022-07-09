@@ -3,11 +3,12 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/pipes/shared.module';
 import { DownloaderRoutingModule } from './downloader-routing.module';
-import { DownloaderComponent } from './pages/downloader/downloader.component';
 import { DownloaderService } from './services/downloader.service';
+import { DownloaderComponent } from './components/downloader/downloader.component';
+import { DownloaderContainerComponent } from './container/downloader-container/downloader-container.component';
 
 @NgModule({
-  declarations: [DownloaderComponent],
+  declarations: [DownloaderContainerComponent, DownloaderComponent],
   imports: [
     CommonModule,
     DownloaderRoutingModule,

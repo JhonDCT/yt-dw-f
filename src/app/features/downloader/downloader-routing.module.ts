@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DownloaderComponent } from './pages/downloader/downloader.component';
+import { DownloaderContainerComponent } from './container/downloader-container/downloader-container.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DownloaderComponent,
+    component: DownloaderContainerComponent,
   },
 ];
 

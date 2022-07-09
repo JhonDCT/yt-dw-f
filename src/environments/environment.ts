@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  downloadHost: 'http://localhost:3000',
+  downloadHost: 'http://192.168.1.12:8080',
+  // downloadHost: 'http://localhost:3000',
 };
 
 /*
