@@ -11,7 +11,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker run -p 3000:80 -d yt-dw-client'
+                    sh 'docker run -p 3001:80 -d yt-dw-client'
                 }
             }
         }
