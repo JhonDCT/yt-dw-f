@@ -9,12 +9,14 @@ import { GenerateUrlForDownload } from '../../entities/download';
 })
 export class DownloadService {
   private host = environment.downloadHost;
+  private api = environment.api;
   private urls = {
     generateUrlForDownload: `${this.host}/generate-path-download`,
-    download: `${this.host}/download`,
+    download: `${this.api}/download-file`,
+    initDownload: `${this.api}/download`
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   generateUrlForDownload(
     url: string,
@@ -43,13 +45,21 @@ export class DownloadService {
     );
   }
 
-  download(path: string): Observable<any> {
-    const request = {
-      params: {
-        path: path,
-      },
-    };
+  download(name: string): Observable<any> {
+    const url = `${this.urls.download}?name=${name}`;
 
-    return this.http.get(this.urls.download, request);
+    return this.http.get(url);
+  }
+
+  initDownload(url: string): Observable<any> {
+    const request = {
+      url
+    }
+
+    return this.http.post(this.urls.initDownload, request);
+  }
+
+  getFiles(path: string): Observable<any> {
+    return this.http.get(`${this.api}/get-files?path=${path}`);
   }
 }

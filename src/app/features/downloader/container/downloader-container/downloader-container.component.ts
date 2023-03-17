@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { DownloaderService } from '../../services/downloader.service';
 
@@ -8,15 +9,35 @@ import { DownloaderService } from '../../services/downloader.service';
   styleUrls: ['./downloader-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DownloaderContainerComponent {
+export class DownloaderContainerComponent implements OnInit {
   currentUrl$!: Observable<string>;
 
-  constructor(private downloaderSVC: DownloaderService) {}
+  files$!: Observable<any>;
+  constructor(
+    private downloaderSVC: DownloaderService,
+    private http: HttpClient
+  ) {}
 
-  onGetLinks({ url, format }: { url: string; format: string }): void {
-    console.log('on-get-links');
+  ngOnInit(): void {
+    // this.files$ = this.downloaderSVC.getFile('files');
+  }
 
-    this.currentUrl$ = this.generateUrl(url, format);
+  onDownloadV2(): void {
+    this.http.get('http://localhost:3000/file-v2').subscribe();
+  }
+
+  onGetLinks({ url }: { url: string }): void {
+    // this.currentUrl$ = this.generateUrl(url, format);
+
+    this.currentUrl$ = this.downloaderSVC.initDownload(url);
+  }
+
+  onDownload(path: string): void {
+    this.currentUrl$ = this.downloaderSVC.download(path);
+  }
+
+  showFile(file: any): void {
+    console.log(file);
   }
 
   private generateUrl(url: string, format: string): Observable<string> {

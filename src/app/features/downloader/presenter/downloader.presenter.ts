@@ -11,8 +11,8 @@ export class DownloaderPresenter {
   currentUrl!: string;
   urlControl = new FormControl('');
   formatControl = new FormControl('');
-  private generateUrl: Subject<{ url: string; format: string }> = new Subject();
-  generateUrl$: Observable<{ url: string; format: string }> =
+  private generateUrl: Subject<{ url: string }> = new Subject();
+  generateUrl$: Observable<{ url: string }> =
     this.generateUrl.asObservable();
   private buttonState: BehaviorSubject<ButtonState> =
     new BehaviorSubject<ButtonState>(ButtonState.INITIAL);
@@ -20,10 +20,9 @@ export class DownloaderPresenter {
 
   getLinks(): void {
     const url = this.urlControl.value.trim();
-    const format = this.formatControl.value.trim();
 
-    if (url && format) {
-      this.generateUrl.next({ url, format });
+    if (url) {
+      this.generateUrl.next({ url });
       this.buttonState.next(ButtonState.LOADING);
     }
   }

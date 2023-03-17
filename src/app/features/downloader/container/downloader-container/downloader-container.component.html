@@ -1,3 +1,12 @@
-<app-downloader
+<!-- <app-downloader
   [currentUrl]="currentUrl$ | async"
-  (getLinksSubmit)="onGetLinks($event)"></app-downloader>
+  (getLinksSubmit)="onGetLinks($event)" (downloadClick)="onDownload($event)"></app-downloader> -->
+
+  <button (click)="onDownloadV2()">Export</button>
+  <a href="http://localhost:3000/file-v2" download>Descargar</a>
+<div>
+  <ng-container *ngFor="let file of files$ | async">
+    <p>{{ file.name }}</p>
+    <button (click)="showFile(file)">Ver</button>
+  </ng-container>
+</div>

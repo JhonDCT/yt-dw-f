@@ -10,31 +10,34 @@
         [formControl]="urlControl"
         name="url"
         class="form__input"
-        placeholder="Pegar el link de YouTube aquí..." />
-
-      <select [formControl]="formatControl" class="form__button">
-        <option selected value="mp3">MP3</option>
-      </select>
+        placeholder="Pegar el link de YouTube aquí..."
+      />
     </div>
 
     <ng-container [ngSwitch]="buttonState$ | async">
       <div *ngSwitchCase="'INITIAL'">
-        <button type="submit" (click)="onGetLinks()" class="form__button">
+        <button
+          type="submit"
+          (click)="onGetLinks()"
+          class="form__button"
+        >
           Convertir
         </button>
       </div>
       <div *ngSwitchCase="'LOADING'">
-        <button class="form__button" disabled>Cargando...</button>
+        <button
+          class="form__button"
+          disabled
+        >Cargando...</button>
       </div>
+      {{ currentUrl }}
       <div *ngSwitchCase="'SUCCESS'">
         <a
-          [href]="currentUrl"
-          target="_blank"
+          [download]="currentUrl"
           type="button"
           (click)="onChangeState()"
           class="form__button"
-          >Descargar</a
-        >
+        >Descargar</a>
       </div>
     </ng-container>
   </div>

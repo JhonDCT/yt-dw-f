@@ -22,14 +22,15 @@ import { DownloaderPresenter } from '../../presenter/downloader.presenter';
 })
 export class DownloaderComponent implements OnInit, OnDestroy, OnChanges {
   @Input() currentUrl!: string | null;
-  @Output() getLinksSubmit: EventEmitter<{ url: string; format: string }> =
+  @Output() getLinksSubmit: EventEmitter<{ url: string }> =
     new EventEmitter();
+  @Output() downloadClick = new EventEmitter();
 
   urlControl: FormControl = this.presenter.urlControl;
   formatControl: FormControl = this.presenter.formatControl;
   buttonState$: Observable<string> = this.presenter.buttonState$;
 
-  constructor(private presenter: DownloaderPresenter) {}
+  constructor(private presenter: DownloaderPresenter) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
@@ -41,8 +42,8 @@ export class DownloaderComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    this.presenter.generateUrl$.subscribe(({ url, format }) =>
-      this.getLinksSubmit.emit({ url, format })
+    this.presenter.generateUrl$.subscribe(({ url }) =>
+      this.getLinksSubmit.emit({ url })
     );
   }
 
@@ -55,6 +56,7 @@ export class DownloaderComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onChangeState(): void {
-    this.presenter.changeState();
+    // this.presenter.changeState();
+    this.downloadClick.emit(this.currentUrl);
   }
 }

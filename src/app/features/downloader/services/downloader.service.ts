@@ -7,7 +7,7 @@ import { DownloadService } from 'src/app/core/services/download/download.service
   providedIn: 'root',
 })
 export class DownloaderService {
-  constructor(private downloadSVC: DownloadService) {}
+  constructor(private downloadSVC: DownloadService) { }
 
   generateUrlForDownload(
     url: string,
@@ -25,6 +25,18 @@ export class DownloaderService {
   }
 
   download(path: string): Observable<any> {
-    return this.downloadSVC.download(path.replace('undefined', 'mp3'));
+    return this.downloadSVC.download(path).pipe(map(res => {
+      console.log(res);
+
+      return res;
+    }));
+  }
+
+  initDownload(url: string): Observable<string> {
+    return this.downloadSVC.initDownload(url).pipe(map((result: { path: string }) => result.path));
+  }
+
+  getFile(path: string): Observable<any> {
+    return this.downloadSVC.getFiles(path);
   }
 }
